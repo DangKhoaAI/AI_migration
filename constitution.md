@@ -24,7 +24,7 @@
 ## 3. Logging & Observability
 
 - **Backend** — Structured JSON logging (`structlog` or standard `logging` with JSON formatter). Include `trace_id` (UUID) per request for correlation.
-- **Frontend** — Log only actionable events (auth state changes, unhandled API errors) to the console in dev builds. Strip debug logs from production builds.
+- **Frontend** — Log only actionable events (auth state changes, unhandled API errors) to the console in dev builds. Avoid noisy debug logs in normal local runs.
 - **Do not log** — Passwords, tokens, or PII. Mask `Authorization` headers and user emails in logs.
 
 ## 4. Security
@@ -33,13 +33,14 @@
 - **SQL injection prevention** — Use SQLAlchemy ORM exclusively; no raw string interpolation into queries.
 - **Auth tokens** — JWT access tokens expire in 15 minutes; refresh tokens expire in 7 days. Store tokens in `httpOnly` cookies if the frontend is served from the same domain; otherwise use `Authorization: Bearer` header with secure localStorage access patterns.
 - **Passwords** — Hash with `bcrypt` (minimum cost factor 12). Never store or transmit plain text passwords.
-- **CORS** — Whitelist explicit origins. Do not use `allow_origins=["*"]` in production.
-- **Dependencies** — Pin major versions in `requirements.txt` and `package.json`. Run `pip-audit` / `npm audit` in CI.
+- **CORS** — Whitelist explicit local origins such as `http://localhost:5173`. Do not use `allow_origins=["*"]` as the default configuration.
+- **Dependencies** — Pin major versions in `requirements.txt` and `package.json`. Provide local audit commands (`pip-audit`, `npm audit`) where practical, but do not require hosted CI for migration acceptance.
+- **External services** — Required auth, persistence, and task behavior must not depend on Firebase, hosted OAuth providers, managed databases, SaaS queues, or cloud runtimes.
 
 ## 5. Code Quality
 
 - **Type safety** — Strict TypeScript (`strict: true`) on the frontend. Strict Pydantic models on the backend. `Any` and `ignore` are last resorts and must be justified in a comment.
-- **Linting** — Ruff (backend) and ESLint + Prettier (frontend) run in pre-commit hooks. CI fails on lint errors.
+- **Linting** — Ruff (backend) and ESLint + Prettier (frontend) must run locally. Pre-commit hooks are recommended, but not required if they add setup friction.
 - **Docstrings** — Public backend functions and complex frontend hooks include a one-line docstring explaining purpose and side effects.
 
 ## 6. Performance
