@@ -1,0 +1,145 @@
+[
+  {
+    "id": "s001-platform-shell-and-styles",
+    "name": "Platform Shell and Styles",
+    "status": "todo",
+    "modules": [
+      "src/index.html",
+      "src/main.ts",
+      "src/polyfills.ts",
+      "src/test.ts",
+      "src/app/app.module.ts",
+      "src/app/app.component.ts",
+      "src/app/app.component.scss",
+      "src/app/app-header.component.ts",
+      "src/app/app-header.component.scss",
+      "src/styles/_base.scss",
+      "src/styles/_grid.scss",
+      "src/styles/_settings.scss",
+      "src/styles/styles.scss",
+      "src/assets/favicon.ico",
+      ".angular-cli.json",
+      "package.json",
+      "package-lock.json",
+      "tsconfig.json",
+      "src/tsconfig.app.json",
+      "sw-precache.config.js"
+    ],
+    "depends_on": [],
+    "rationale": "This slice establishes the browser entry point, Angular root composition, header shell, global styling, build scripts, and production service-worker hook. Other feature slices are mounted through this shell, so Stage 2/3 can use it as the baseline for routing, layout, and frontend build behavior.",
+    "open_discoveries": []
+  },
+  {
+    "id": "s002-firebase-platform-and-security-rules",
+    "name": "Firebase Platform and Security Rules",
+    "status": "todo",
+    "modules": [
+      "src/app/firebase/firebase.module.ts",
+      "src/app/firebase/index.ts",
+      "src/environments/environment.ts",
+      "src/environments/environment.prod.ts",
+      "src/environments/firebase.ts",
+      "firebase.rules.json",
+      "firebase.json",
+      ".firebaserc"
+    ],
+    "depends_on": [
+      "s001-platform-shell-and-styles"
+    ],
+    "rationale": "Auth and task services both rely on AngularFire providers and the Firebase namespace. The Firebase database rules also define the AS-IS ownership boundary for task data, which downstream local backend slices must preserve.",
+    "open_discoveries": []
+  },
+  {
+    "id": "s003-authentication-and-route-access",
+    "name": "Authentication and Route Access",
+    "status": "todo",
+    "modules": [
+      "src/app/auth/auth.module.ts",
+      "src/app/auth/auth.routes.ts",
+      "src/app/auth/auth.service.ts",
+      "src/app/auth/components/sign-in/index.ts",
+      "src/app/auth/components/sign-in/sign-in.component.ts",
+      "src/app/auth/components/sign-in/sign-in.component.scss",
+      "src/app/auth/guards/index.ts",
+      "src/app/auth/guards/require-auth.guard.ts",
+      "src/app/auth/guards/require-unauth.guard.ts",
+      "src/app/auth/index.ts"
+    ],
+    "depends_on": [
+      "s001-platform-shell-and-styles",
+      "s002-firebase-platform-and-security-rules"
+    ],
+    "rationale": "This slice owns AS-IS authentication state, sign-in provider flows, sign-out, and guard redirects. It must precede task migration because task persistence is scoped by the authenticated Firebase uid and the `/tasks` route is guarded.",
+    "open_discoveries": []
+  },
+  {
+    "id": "s004-task-data-model-and-service",
+    "name": "Task Data Model and Service",
+    "status": "todo",
+    "modules": [
+      "src/app/tasks/models/index.ts",
+      "src/app/tasks/models/task.ts",
+      "src/app/tasks/tasks.service.ts"
+    ],
+    "depends_on": [
+      "s002-firebase-platform-and-security-rules",
+      "s003-authentication-and-route-access"
+    ],
+    "rationale": "This slice contains the AS-IS task schema, Firebase timestamp behavior, user-scoped database path, completed filtering query, and create/update/delete methods. It depends on auth for `uid$` and on Firebase for list persistence.",
+    "open_discoveries": []
+  },
+  {
+    "id": "s005-task-ui-workflow",
+    "name": "Task UI Workflow",
+    "status": "todo",
+    "modules": [
+      "src/app/tasks/tasks.module.ts",
+      "src/app/tasks/tasks.routes.ts",
+      "src/app/tasks/index.ts",
+      "src/app/tasks/components/tasks/index.ts",
+      "src/app/tasks/components/tasks/tasks.component.ts",
+      "src/app/tasks/components/task-form/index.ts",
+      "src/app/tasks/components/task-form/task-form.component.ts",
+      "src/app/tasks/components/task-form/task-form.component.scss",
+      "src/app/tasks/components/task-list/index.ts",
+      "src/app/tasks/components/task-list/task-list.component.ts",
+      "src/app/tasks/components/task-list/task-list.component.scss",
+      "src/app/tasks/components/task-item/index.ts",
+      "src/app/tasks/components/task-item/task-item.component.ts",
+      "src/app/tasks/components/task-item/task-item.component.html",
+      "src/app/tasks/components/task-item/task-item.component.scss",
+      "src/app/tasks/directives/index.ts",
+      "src/app/tasks/directives/auto-focus.directive.ts"
+    ],
+    "depends_on": [
+      "s003-authentication-and-route-access",
+      "s004-task-data-model-and-service"
+    ],
+    "rationale": "This slice owns the user-visible task workflow: protected `/tasks` page, filter links, task creation form, task list, edit mode, completion toggle, deletion, and focus behavior. It depends on auth guards for route access and the task service for persistence.",
+    "open_discoveries": []
+  },
+  {
+    "id": "s006-test-and-quality-harness",
+    "name": "Test and Quality Harness",
+    "status": "todo",
+    "modules": [
+      "karma.conf.js",
+      "protractor.conf.js",
+      "tslint.json",
+      "src/tsconfig.spec.json",
+      "e2e/tsconfig.e2e.json",
+      "e2e/app.e2e-spec.ts",
+      "e2e/app.po.ts",
+      "src/app/tasks/models/task.spec.ts",
+      "circle.yml"
+    ],
+    "depends_on": [
+      "s001-platform-shell-and-styles",
+      "s003-authentication-and-route-access",
+      "s004-task-data-model-and-service",
+      "s005-task-ui-workflow"
+    ],
+    "rationale": "This slice captures the AS-IS quality and operational verification surface: Karma/Jasmine unit tests, Protractor smoke test, TSLint config, and CircleCI build/deploy behavior. It is ordered last because its tests reference the shell and task model and should be replaced after functional slices define target behavior.",
+    "open_discoveries": []
+  }
+]
