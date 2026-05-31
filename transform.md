@@ -1,6 +1,6 @@
 # Transformation Policy: Angular + Firebase → FastAPI + React
 
-> **Status:** `draft`  
+> **Status:** `frozen`  
 > **Policy agent:** migration-policy-agent  
 > **Last updated:** 2026-05-31
 
@@ -195,4 +195,4 @@ Replace the legacy implementation while preserving the core user-facing behavior
 
 ## 12. Policy Status
 
-`draft` — revised after user feedback requiring local-only execution and no third-party service setup. Awaiting user review before downstream analysis or implementation begins.
+`frozen` — approved by the user on 2026-05-31 after revision for local-only execution and no third-party service setup. Downstream analysis and implementation stages should treat this policy as the accepted baseline unless the user explicitly reopens it.
