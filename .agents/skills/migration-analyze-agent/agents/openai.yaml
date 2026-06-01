@@ -1,0 +1,7 @@
+interface:
+  display_name: "Migration Analyze Agent"
+  short_description: "Analyze legacy system and slices"
+  default_prompt: "Use $migration-analyze-agent to analyze the current system and create migration slices."
+
+policy:
+  allow_implicit_invocation: true

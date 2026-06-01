@@ -1,0 +1,7 @@
+interface:
+  display_name: "Migration Slice Acceptance Agent"
+  short_description: "Accept a migrated slice"
+  default_prompt: "Use $migration-slice-acceptance-agent to run slice-level migration acceptance."
+
+policy:
+  allow_implicit_invocation: true

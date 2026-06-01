@@ -1,0 +1,7 @@
+interface:
+  display_name: "Migration Slice Orchestrator Agent"
+  short_description: "Coordinate one migration slice"
+  default_prompt: "Use $migration-slice-orchestrator-agent to run the next correct per-slice migration stage."
+
+policy:
+  allow_implicit_invocation: true

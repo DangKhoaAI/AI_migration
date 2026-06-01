@@ -1,0 +1,7 @@
+interface:
+  display_name: "Migration Policy Agent"
+  short_description: "Draft transformation policy"
+  default_prompt: "Use $migration-policy-agent to draft transform.md for this migration or modernization."
+
+policy:
+  allow_implicit_invocation: true

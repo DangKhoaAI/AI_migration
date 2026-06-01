@@ -1,0 +1,7 @@
+interface:
+  display_name: "Migration Transform Agent"
+  short_description: "Write TO-BE slice specs"
+  default_prompt: "Use $migration-transform-agent to convert this AS-IS spec into a TO-BE slice spec."
+
+policy:
+  allow_implicit_invocation: true

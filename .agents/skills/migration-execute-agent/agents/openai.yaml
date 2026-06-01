@@ -1,0 +1,7 @@
+interface:
+  display_name: "Migration Execute Agent"
+  short_description: "Execute one migration task"
+  default_prompt: "Use $migration-execute-agent to implement the next pending migration task."
+
+policy:
+  allow_implicit_invocation: true

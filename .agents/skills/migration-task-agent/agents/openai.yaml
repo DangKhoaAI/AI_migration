@@ -1,0 +1,7 @@
+interface:
+  display_name: "Migration Task Agent"
+  short_description: "Decompose specs into tasks"
+  default_prompt: "Use $migration-task-agent to split this TO-BE spec into executable migration tasks."
+
+policy:
+  allow_implicit_invocation: true

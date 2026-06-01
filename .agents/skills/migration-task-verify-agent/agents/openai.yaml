@@ -1,0 +1,7 @@
+interface:
+  display_name: "Migration Task Verify Agent"
+  short_description: "Verify one migration task"
+  default_prompt: "Use $migration-task-verify-agent to verify the implemented migration task."
+
+policy:
+  allow_implicit_invocation: true

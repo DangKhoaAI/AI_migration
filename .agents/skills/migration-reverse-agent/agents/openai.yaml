@@ -1,0 +1,7 @@
+interface:
+  display_name: "Migration Reverse Agent"
+  short_description: "Write AS-IS slice specs"
+  default_prompt: "Use $migration-reverse-agent to reverse-engineer this slice into an AS-IS spec."
+
+policy:
+  allow_implicit_invocation: true

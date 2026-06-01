@@ -1,0 +1,7 @@
+interface:
+  display_name: "Migration Orchestrator Agent"
+  short_description: "Coordinate migration pipeline stages"
+  default_prompt: "Use $migration-orchestrator-agent to inspect the migration artifacts and run the next correct stage."
+
+policy:
+  allow_implicit_invocation: true
