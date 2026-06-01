@@ -59,7 +59,7 @@
 
 ### T002 - Port the browser document, favicon, and React runtime entry
 
-- status: `pending`
+- status: `done`
 - goal: Replace the Angular browser document and bootstrap with a Vite document, preserved favicon/title, and React 18 root render entry.
 - t-spec references:
   - Browser Document interface mapping

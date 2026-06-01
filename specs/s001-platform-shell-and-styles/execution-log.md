@@ -28,3 +28,28 @@
 - deviations and follow-ups:
   - `npm install` without a workspace-local cache initially failed under the sandbox because npm tried to write to `/home/khoa/.npm`; rerunning with `--cache /tmp/multica-npm-cache` passed.
   - Full `npm run build` success remains deferred until downstream tasks add `frontend/index.html` and `frontend/src` files.
+
+## 2026-06-01 - T002
+
+- task id: `T002`
+- status: `done`
+- files changed:
+  - `frontend/index.html`
+  - `frontend/src/main.tsx`
+  - `frontend/public/favicon.ico`
+  - `frontend/src/styles/styles.scss`
+  - `specs/s001-platform-shell-and-styles/tasks.md`
+  - `specs/s001-platform-shell-and-styles/execution-log.md`
+- implementation summary:
+  - Added the Vite browser document with base href `/`, preserved title `Todo Angular Firebase`, responsive viewport without the legacy `user-scalable=no` restriction, one React root mount, local favicon link, and Vite module entry script.
+  - Added the React 18 runtime entry using `createRoot`, strict-mode rendering, explicit missing-root failure, and one global SCSS import.
+  - Added the stylesheet entrypoint placeholder for `T005` global style porting and copied the legacy favicon binary into Vite public assets.
+  - Preserved the `T001` Stage 6 verification artifact unchanged.
+- verification run:
+  - `cmp -s src/assets/favicon.ico frontend/public/favicon.ico` exited successfully.
+  - `rg -n "id=\"root\"|/favicon.ico|Todo Angular Firebase|viewport|<base" frontend/index.html` confirmed the expected document metadata, favicon link, and single root mount line.
+  - `rg -n "https?://|fonts\\.googleapis|maxcdn\\.bootstrapcdn|typekit|Typekit|Material Icons|font-awesome|user-scalable|<app-root|serviceWorker|platformBrowserDynamic|zone\\.js|reflect|@angular" frontend/index.html frontend/src/main.tsx` returned no matches.
+  - `rg -n "createRoot|styles/styles\\.scss|serviceWorker|platformBrowserDynamic|zone\\.js|@angular|polyfills|React root" frontend/src/main.tsx` confirmed React 18 `createRoot` and the one global stylesheet import with no Angular/polyfill/service-worker code.
+  - `cd frontend && npm run build` reached the expected downstream missing shell failure: `TS2307` because `frontend/src/App.tsx` is owned by `T003`.
+- deviations and follow-ups:
+  - Full frontend build success remains deferred until `T003` and later shell/style tasks add the root app, header, and styles.
