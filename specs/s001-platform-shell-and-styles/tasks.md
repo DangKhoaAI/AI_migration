@@ -25,7 +25,7 @@
 
 ### T001 - Create the Vite frontend scaffold and build surface
 
-- status: `pending`
+- status: `done`
 - goal: Create the target `frontend/` Vite React TypeScript project shell with local build scripts and modern strict TypeScript configuration.
 - t-spec references:
   - Target Scope: frontend package metadata, Vite config, TypeScript configs, local shell/build scripts
